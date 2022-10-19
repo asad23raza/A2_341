@@ -1,0 +1,47 @@
+---
+title: "Assignment 2"
+author: "Asad"
+date: "16/10/2022"
+output: html_document
+---
+
+## STAT341 Assignment 2
+1a) 
+hoopR: A utility for working with Men's Basketball Data
+wehoop: A utility for working with Women's Basketball Data
+1b)
+```{r}
+library(hoopR)
+load_nba_player_box()
+```
+1c)
+```{r}
+NbaData = read.csv("C:/Users/Asad Developer/Downloads/NBA_Player_Boxscore_2021-22.csv")
+table(NbaData$team_abbreviation)
+```
+A typical team has 800-1000 rows dedicated to it in the dataset.
+DUR (12 rows) and LEB (11) have an unusually low number of rows in the dataset.
+There are a total of 27802 rows in the dataset
+
+1d)
+```{r}
+npb = read.csv("C:/Users/Asad Developer/Downloads/NBA_Player_Boxscore_2021-22.csv")
+npb2 = subset(npb, team_abbreviation != "DUR" & team_abbreviation != "LEB" )
+dim(npb)
+dim(npb2)
+```
+The new Dataset has 27779 rows while the original had 27802 rows.
+
+## Question 2
+
+2a)
+```{r}
+par(mfrow=c(1,3))
+hist(npb2$reb, xlab="Rebounds per player-game", main="Frequency of Rebounds",
+     breaks=  floor(log2(nrow(npb2))+1))
+boxplot(npb2$reb)
+plot(npb2$reb, ylab="Rebounds per player-game")
+```
+The histogram is left-skewed. It shows that there are more player-games with lower numbers of rebounds.
+The box plot gives us additional information about the data. For example it tells us the median is around 2.5.
+Lastly the quantile plot has many instances between 0-10 and then for 10 and above rebounds there is much less. The quantile plot may be misleading 
