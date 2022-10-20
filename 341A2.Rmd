@@ -16,7 +16,7 @@ load_nba_player_box()
 ```
 1c)
 ```{r}
-NbaData = read.csv("C:/Users/Asad Developer/Downloads/NBA_Player_Boxscore_2021-22.csv")
+ NbaData = read.csv("C:/Users/a48raza/Downloads/NBA_Player_Boxscore_2021-22.csv")
 table(NbaData$team_abbreviation)
 ```
 A typical team has 800-1000 rows dedicated to it in the dataset.
@@ -25,7 +25,7 @@ There are a total of 27802 rows in the dataset
 
 1d)
 ```{r}
-npb = read.csv("C:/Users/Asad Developer/Downloads/NBA_Player_Boxscore_2021-22.csv")
+npb = read.csv("C:/Users/a48raza/Downloads/NBA_Player_Boxscore_2021-22.csv")
 npb2 = subset(npb, team_abbreviation != "DUR" & team_abbreviation != "LEB" )
 dim(npb)
 dim(npb2)
@@ -42,6 +42,34 @@ hist(npb2$reb, xlab="Rebounds per player-game", main="Frequency of Rebounds",
 boxplot(npb2$reb)
 plot(npb2$reb, ylab="Rebounds per player-game")
 ```
+
 The histogram is left-skewed. It shows that there are more player-games with lower numbers of rebounds.
 The box plot gives us additional information about the data. For example it tells us the median is around 2.5.
 Lastly the quantile plot has many instances between 0-10 and then for 10 and above rebounds there is much less. The quantile plot may be misleading 
+
+2b)
+The box plot is a good representation of this data because we can see the median rebounds as well as the lower and upper quartile. This information is useful if we want to know how many rebounds we may expect in a typical game.
+
+2c)
+```{r}
+by(npb2$reb, npb2$athlete_position_name, mean)
+```
+2d)
+```{r}
+par(mar=c(8,2,1,1))
+boxplot(main = "Rebounds per Position",
+by(npb2$reb, npb2$athlete_position_name,list),las=2)
+
+```
+It is notable that the center has the highest median rebounds because Centers are typically taller and occupy the space nearest to the hoop in a basketball game. Guards have the least median rebounds because a guard is expected to be faster and usually occupies the space on the 3-point line. There are also many outliers in the Forward category because Fowards include both power forwards and small forwards. Two very different positions which has probaby lead to the increased variability.
+
+2e)
+Yes, the box plot is a good representation of these 7 populations because we can see the median, 1st quartile, 3rd quartile, max, min and outliers. That is a lot of data that would be hard to display in a histogram. Box plots are particularly good to display data where we are not sure what specific attribute the user is interested in.
+
+2f) 
+To avoid the problem of overdrawing we use jitter. We make the following changes to the boxplot in d
+```{r}
+par(mar=c(8,2,1,1))
+boxplot(main = "Rebounds per Position", by(npb2$reb, npb2$athlete_position_name,jitter),las=2)
+```
+2g)
